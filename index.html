@@ -1251,10 +1251,19 @@ function setScale(){S=userS||(CW<760?1:2);buf.width=Math.ceil(CW/S)+2;buf.height
 function tileSprite(c3,alt){const[a,b,line]=c3;const c=mk(64,32),x=c.getContext('2d'),img=x.createImageData(64,32),d=img.data;const A=hexRgb(alt?b:a),Ln=hexRgb(line);
   for(let y=0;y<32;y++){const hw=y<16?(y+1)*2:(32-y)*2;for(let i=32-hw;i<32+hw;i++){const edge=(y<16&&(i<32-hw+2||i>=32+hw-2));const col=edge?Ln:A;const n=(hash(i,y,7)-.5)*10;const k=(y*64+i)*4;d[k]=clamp(col[0]+n,0,255);d[k+1]=clamp(col[1]+n,0,255);d[k+2]=clamp(col[2]+n,0,255);d[k+3]=255;}}
   x.putImageData(img,0,0);return c;}
-function buildStatic(){
+// O chão da sala é desenhado em pedaços de 1024×1024, só quando aparecem na tela. Uma imagem única da cidade inteira
+// (6224×3100) pesava uns 77 MB e alguns computadores não conseguiam desenhá-la, deixando a tela preta.
+const CHK=1024;
+function buildStatic(){const r=room,Wc=r.wall?WALLS[r.wall]:null,minX=P(0,r.h).x-40,maxX=P(r.w,0).x+40,minY=(Wc?-112-30:-30),maxY=P(r.w,r.h).y+8+30;
+  rstatic={cv:{width:maxX-minX,height:maxY-minY},ox:-minX,oy:-minY,chunks:new Map()};}
+function drawStatic(){const s=rstatic,x0=camX-s.ox,y0=camY-s.oy,c0=Math.max(0,Math.floor(-x0/CHK)),c1=Math.min(Math.ceil(s.cv.width/CHK)-1,Math.floor((buf.width-x0)/CHK)),r0=Math.max(0,Math.floor(-y0/CHK)),r1=Math.min(Math.ceil(s.cv.height/CHK)-1,Math.floor((buf.height-y0)/CHK));
+  for(let cy=r0;cy<=r1;cy++)for(let cx=c0;cx<=c1;cx++){const k=cx+','+cy;let c=s.chunks.get(k);
+    if(!c){c=mk(CHK,CHK);const g=c.getContext('2d');if(!g)continue;g.translate(-cx*CHK,-cy*CHK);paintStatic(g,s.ox,s.oy,{x0:cx*CHK,y0:cy*CHK,x1:(cx+1)*CHK,y1:(cy+1)*CHK});s.chunks.set(k,c);
+      if(s.chunks.size>12){const f=s.chunks.keys().next().value;if(f!==k)s.chunks.delete(f);}}
+    bx.drawImage(c,x0+cx*CHK,y0+cy*CHK);}}
+function paintStatic(x,ox,oy,clip){
   const r=room,F=FLOORS[r.floor],Wc=r.wall?WALLS[r.wall]:null,WH=112,FT=8;
-  const minX=P(0,r.h).x-40,maxX=P(r.w,0).x+40,minY=(Wc?-WH-30:-30),maxY=P(r.w,r.h).y+FT+30;
-  const c=mk(maxX-minX,maxY-minY),x=c.getContext('2d'),ox=-minX,oy=-minY;
+  const out=(px,py)=>px+80<clip.x0||px-80>clip.x1||py+60<clip.y0||py-60>clip.y1;
   const tA=tileSprite(F,0),tB=tileSprite(F,1);
   const col=(cx,y0,h,colr)=>{x.fillStyle=colr;x.fillRect(cx,y0,1,h);};
   if(Wc){
@@ -1265,13 +1274,13 @@ function buildStatic(){
       for(let k=0;k<32;k++){const base=sy+Math.floor(k/2);col(sx+k,base-WH,WH,(k%16===0)?shade(Wc[1],-.06):Wc[1]);col(sx+k,base-WH-6,6,shade(Wc[2],-.1));col(sx+k,base-WH-2,2,'#ff3fa4');col(sx+k,base-7,7,shade(Wc[1],-.25));}}
     x.fillStyle=Wc[2];x.fillRect(ox-1,oy-WH-6,2,WH+6);
     for(const d of r.decals||[]){const im=wimg('img/world/'+d.img+'.webp');if(!im)continue;const W=im.width,H=im.height;x.save();x.imageSmoothingEnabled=true;
-      if(d.wall==='R'){const p=P(d.at,0);x.setTransform(32*d.len/W,16*d.len/W,0,d.h/H,ox+p.x,oy+p.y-d.z-d.h);}else{const p=P(0,d.at+d.len);x.setTransform(32*d.len/W,-16*d.len/W,0,d.h/H,ox+p.x,oy+p.y-d.z-d.h);}
+      if(d.wall==='R'){const p=P(d.at,0);x.transform(32*d.len/W,16*d.len/W,0,d.h/H,ox+p.x,oy+p.y-d.z-d.h);}else{const p=P(0,d.at+d.len);x.transform(32*d.len/W,-16*d.len/W,0,d.h/H,ox+p.x,oy+p.y-d.z-d.h);}
       x.drawImage(im,0,0);x.restore();}}
   const ftx=FTEX[r.floor]?wimg(FTEX[r.floor]):null;
-  for(let y=0;y<r.h;y++)for(let xx=0;xx<r.w;xx++){const p=P(xx,y),tx=ox+p.x-32,ty=oy+p.y;
+  for(let y=0;y<r.h;y++)for(let xx=0;xx<r.w;xx++){const p=P(xx,y),tx=ox+p.x-32,ty=oy+p.y;if(out(tx+32,ty))continue;
     if(r.water&&y>=r.water){x.fillStyle=y===r.water?'#7ac8e8':'#3a8ac8';}
     if(ftx&&!(r.water&&y>=r.water)){x.save();x.beginPath();x.moveTo(tx+32,ty);x.lineTo(tx+64,ty+16);x.lineTo(tx+32,ty+32);x.lineTo(tx,ty+16);x.closePath();x.clip();
-      x.setTransform(1,.5,-1,.5,tx+32,ty);x.imageSmoothingEnabled=true;const n=ftx.width/4;x.drawImage(ftx,(xx%4)*n,(y%4)*n,n,n,0,0,32.5,32.5);x.restore();
+      x.transform(1,.5,-1,.5,tx+32,ty);x.imageSmoothingEnabled=true;const n=ftx.width/4;x.drawImage(ftx,(xx%4)*n,(y%4)*n,n,n,0,0,32.5,32.5);x.restore();
       x.fillStyle=F[2];for(let k=0;k<32;k+=2){x.fillRect(tx+k,ty+16-k/2,2,1);x.fillRect(tx+32+k,ty+k/2,2,1);}}
     else x.drawImage((xx+y)%2?tB:tA,tx,ty);
     // cada pedra do piso com um tom levemente diferente, e algumas rachaduras
@@ -1281,18 +1290,17 @@ function buildStatic(){
     if(y===r.h-1||(r.water&&y===r.water-1&&false)){for(let k=0;k<32;k++){const yy=ty+16+Math.floor(k/2);x.fillStyle=F[3];x.fillRect(tx+k,yy+1,1,FT);}}
     if(xx===r.w-1){for(let k=0;k<32;k++){const yy=ty+31-Math.floor(k/2);x.fillStyle=F[4];x.fillRect(tx+32+k,yy+1,1,FT);}}
     x.globalCompositeOperation='source-over';}
-  if(r.water){const t=tileSprite(['#3a8ac8','#3484c0','#6ab8e0'],0);for(let y=r.water;y<r.h;y++)for(let xx=0;xx<r.w;xx++){const p=P(xx,y),tx=ox+p.x-32,ty=oy+p.y;x.drawImage(t,tx,ty);}}
+  if(r.water){const t=tileSprite(['#3a8ac8','#3484c0','#6ab8e0'],0);for(let y=r.water;y<r.h;y++)for(let xx=0;xx<r.w;xx++){const p=P(xx,y),tx=ox+p.x-32,ty=oy+p.y;if(out(tx+32,ty))continue;x.drawImage(t,tx,ty);}}
   // Lado leste da cidade (serra e campo): chão de grama com flores; na ponta da orla, areia de praia selvagem
   if(r.key==='p:lobby'&&r.w>96){const G3=['#4f8a52','#4a844d','#3a6a3e'],gr=[tileSprite(G3,0),tileSprite(G3,1)],sd=[tileSprite(FLOORS.areia,0),tileSprite(FLOORS.areia,1)];
-    for(let y=0;y<(r.water||r.h);y++)for(let xx=96;xx<r.w;xx++){const p=P(xx,y);x.drawImage((y>=47?sd:gr)[(xx+y)%2],ox+p.x-32,oy+p.y);
+    for(let y=0;y<(r.water||r.h);y++)for(let xx=96;xx<r.w;xx++){const p=P(xx,y);if(out(ox+p.x,oy+p.y))continue;x.drawImage((y>=47?sd:gr)[(xx+y)%2],ox+p.x-32,oy+p.y);
       if(y<47&&hash(xx,y,21)>.65){x.fillStyle=hash(xx,y,22)>.8?'#ffc83d':hash(xx,y,22)>.7?'#ff9ad0':'#6aaa62';x.fillRect(ox+p.x-10+hash(xx,y,23)*20,oy+p.y+10+hash(xx,y,24)*10,2,2);}}}
   // Terrenos da cidade: terra batida quando estão à venda, grama quando já têm dono
   if(r.key==='p:lobby'){const sale=[tileSprite(['#8a6a4e','#84644a','#6a5038'],0),tileSprite(['#8a6a4e','#84644a','#6a5038'],1)],own=[tileSprite(['#4f8a52','#4a844d','#3a6a3e'],0),tileSprite(['#4f8a52','#4a844d','#3a6a3e'],1)];
     for(const l of LOTS){const S=lotState[l.id]?own:sale;for(let y=l.y;y<l.y+l.h;y++)for(let xx=l.x;xx<l.x+l.w;xx++){const p=P(xx,y);x.drawImage(S[(xx+y)%2],ox+p.x-32,oy+p.y);}}}
   // sombras no chão das peças fixas das salas públicas ao ar livre (o sol baixo fica ao fundo)
   if(r.pub&&!r.wall){x.fillStyle='rgba(24,6,44,.15)';for(const f of r.furni){const d=FD[f.id];if(!d||d.flat||f.lot||f.id==='cerca'||f.id==='alambrado'||(r.water&&f.y>=r.water))continue;const[W,D]=fdims(f.id,f.rot),sm=W===1&&D===1,i=sm?.36:.06,l=Math.min(2,(d.h||30)/(sm?90:55)),q=(a,b)=>{const p=P(a,b);return[ox+p.x,oy+p.y];};
-    const X0=f.x+i,X1=f.x+W-i,Y0=f.y+i,Y1=f.y+D-i,pts=[q(X0,Y1),q(X1,Y0),q(X1+l,Y0+l),q(X1+l,Y1+l),q(X0+l,Y1+l)];x.beginPath();pts.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill();}}
-  rstatic={cv:c,ox,oy};}
+    const X0=f.x+i,X1=f.x+W-i,Y0=f.y+i,Y1=f.y+D-i,pts=[q(X0,Y1),q(X1,Y0),q(X1+l,Y0+l),q(X1+l,Y1+l),q(X0+l,Y1+l)];x.beginPath();pts.forEach((p,i)=>i?x.lineTo(p[0],p[1]):x.moveTo(p[0],p[1]));x.closePath();x.fill();}}}
 const hoverSpr=(()=>{const c=mk(64,32),x=c.getContext('2d');x.fillStyle='rgba(255,255,255,.9)';for(let y=0;y<32;y++){const hw=y<16?(y+1)*2:(32-y)*2;x.fillRect(32-hw,y,2,1);x.fillRect(32+hw-2,y,2,1);}return c;})();
 const shadowSpr=(()=>{const c=mk(26,9),x=c.getContext('2d');x.fillStyle='rgba(15,5,30,.35)';for(let y=0;y<9;y++){const w=Math.round(13*Math.sqrt(1-((y-4)/4.5)**2));x.fillRect(13-w,y,w*2,1);}return c;})();
 function applyCam(){if(!rstatic)return;const bw=buf.width,bh=buf.height,rw=rstatic.cv.width,rh=rstatic.cv.height;
@@ -1310,7 +1318,7 @@ function render(t,dt){
     const g=bx.createLinearGradient(0,0,0,buf.height);g.addColorStop(0,'rgba(18,8,31,.05)');g.addColorStop(1,'rgba(18,8,31,.55)');bx.fillStyle=g;bx.fillRect(0,0,buf.width,buf.height);}
   else{const g=bx.createRadialGradient(buf.width/2,buf.height*.45,10,buf.width/2,buf.height*.45,Math.max(buf.width,buf.height)*.7);g.addColorStop(0,'#2e1450');g.addColorStop(1,'#120720');bx.fillStyle=g;bx.fillRect(0,0,buf.width,buf.height);}
   if(!room||!rstatic)return blit(dt);
-  bx.drawImage(rstatic.cv,camX-rstatic.ox,camY-rstatic.oy);
+  drawStatic();
   if(room.water){for(let y=room.water;y<room.h;y++)for(let x=0;x<room.w;x++){if(hash(x,y,fr%6)>.8){const p=P(x+.5,y+.5);bx.fillStyle='rgba(220,245,255,.8)';bx.fillRect(camX+p.x-3,camY+p.y,6,1);}}}
   // pisos planos e cursor
   const list=[];
@@ -2893,12 +2901,14 @@ joyVec=function(sx,sy){if(!on3d())return[sx/32+sy/16,sy/16-sx/32];const a=G.yaw,
 
 // ====================================================================== LAÇO
 let last=performance.now(),uiT=0;
-function frame(ts){const dt=Math.min(.05,(ts-last)/1000);last=ts;now+=dt;
+// Se um quadro der erro, o jogo avisa na tela e continua tentando, em vez de ficar com a tela preta para sempre
+let feT=-1e9;function frameErr(e){console.error(e);if(performance.now()-feT>15000){feT=performance.now();try{toast('Erro ao desenhar o mapa: '+String(e&&e.message||e).slice(0,110));}catch(_){}}}
+function frame(ts){try{const dt=Math.min(.05,(ts-last)/1000);last=ts;now+=dt;
   if(tab==='world'&&mouse&&room){hoverTile=tileAt(mouse.x,mouse.y);const h=hitTest(mouse.x,mouse.y);hoverObj=h?h.obj:null;cv.style.cursor=h||placing?'pointer':'default';}else{hoverTile=null;hoverObj=null;}
   if(ready&&room)moveMe(dt);movePeers(dt);
   bubbleT+=dt;if(bubbleT>4.5){bubbleT=0;for(const b of bubbles)b.ty-=27;}
   uiT+=dt;if(uiT>1){uiT=0;hud();}
-  if(tab==='world')render(now,dt);requestAnimationFrame(frame);}
+  if(tab==='world')render(now,dt);}catch(e){frameErr(e);}requestAnimationFrame(frame);}
 if(!WORLD_ON){document.querySelectorAll('#nav [data-tab=world],#q-world').forEach(b=>b.remove());$('#nav .in').style.gridTemplateColumns='repeat(3,1fr)';$('.quick').style.gridTemplateColumns='repeat(3,1fr)';}
 addEventListener('popstate',()=>{if(openId)closeWins(true);});
 // teclado aberto no celular: esconde o menu de baixo e cola o campo de digitar no teclado
