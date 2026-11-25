@@ -1466,8 +1466,10 @@ async function connect(){const C=window.claude;
     db.collection('rooms').limit(80).onSnapshot(s=>{roomsList={};for(const d of s.docs){const v=d.data();if(v&&v.owner)roomsList[d.id]=v;}if(openId==='nav')renderNav();},()=>{});
     db.collection('ledger').orderBy('at','desc').limit(300).onSnapshot(s=>{ledger=s.docs.map(d=>d.data());renderFeed();if(openId==='cash')renderCash();},()=>{});}
   else{const semConta=!ACC||!localAccounts()[ACC];if(semConta&&!MAPA){showLogin();return;}myId=semConta?'u:visitante':'u:'+ACC; // no modo mapa não há login: quem não tem conta entra como visitante
-isOwner=true;lotState=LS.get('vbz-lots',{});roomsList=LS.get('vbz-rooms',{});ledger=LS.get('vbz-ledger',[]);renderFeed();const p=LS.get('vbz-profile',null);if(p)applyProfile(p);else onboard();}
+isOwner=true;lotState=LS.get('vbz-lots',{});roomsList=LS.get('vbz-rooms',{});ledger=LS.get('vbz-ledger',[]);renderFeed();const p=LS.get('vbz-profile',null);if(p)applyProfile(p);else if(MAPA)visitante();else onboard();}
   $('#b-cash').hidden=!isOwner;}
+// Modo mapa: sem login nem criação de personagem, a pessoa entra na cidade como um visitante padrão
+function visitante(){applyProfile({v:2,nick:'Visitante',coins:300,look:{skin:SKINS[1],hs:'curto',hc:HCOLS[0],top:'camiseta',tc:'#F5F5F7',bot:'calca',bc:'#424049',shoes:'tenis',sc:'#0B0B0D'},owned:['camiseta','calca','tenis'],inv:{cadeira:1,planta:1},rooms:[]});saveProfile();}
 
 // ====================================================================== NEGÓCIOS
 function spend(n){if(profile.coins<n){log(`Faltam ${fmt(n-profile.coins)} pilas.`,'bad');openWin('buy');return false;}profile.coins-=n;return true;}
