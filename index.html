@@ -1,4 +1,4 @@
-<!doctype html><html lang="pt-BR" translate="no" class="notranslate"><head><meta charset=utf8><meta name="google" content="notranslate"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<!doctype html><html lang="pt-BR" translate="no" class="notranslate"><head><meta charset=utf8><meta name="google" content="notranslate"><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content"><meta name="theme-color" content="#0B0812"><meta name="mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"><meta name="apple-mobile-web-app-title" content="VBZ"><link rel="manifest" href="manifest.webmanifest"><link rel="icon" type="image/png" sizes="32x32" href="img/app/favicon-32.png"><link rel="apple-touch-icon" href="img/app/icon-180.png"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>VBZ</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -139,6 +139,7 @@ body:not([data-tab="world"]) .wui,body:not([data-tab="world"]) #cv{display:none!
 #chat{flex:1;min-width:0;background:rgba(255,255,255,.08);border:1px solid var(--w-line);border-radius:999px;color:var(--w-text);padding:9px 14px;font-size:14px}
 #chat::placeholder{color:#9d93b3}
 #send{border-radius:999px}
+html.mapa #nav,html.mapa #w-friendsbtn{display:none!important}html.mapa body:not([data-tab="world"]) main,html.mapa body:not([data-tab="world"]) .screen{visibility:hidden}
 #lotcard{position:fixed;left:50%;transform:translateX(-50%);top:calc(112px + env(safe-area-inset-top,0px));display:flex;gap:8px;align-items:center;padding:6px 8px 6px 13px;z-index:7;max-width:calc(100vw - 32px);font-size:14px}
 #placebar{position:fixed;left:50%;transform:translateX(-50%);top:calc(62px + env(safe-area-inset-top,0px));display:flex;gap:8px;align-items:center;padding:6px 8px 6px 13px;z-index:7}
 #sel{position:fixed;z-index:8;display:flex;gap:5px;flex-wrap:wrap;padding:8px;max-width:260px}
@@ -518,6 +519,40 @@ kbd{background:rgba(255,255,255,.08);border-color:var(--gray)}
 .post.tw .acts{grid-column:2/4;gap:var(--s3);margin-top:2px}
 .post.tw .acts svg{width:18px;height:18px}
 .tlist{margin-top:var(--s2)}.tlh{font-family:var(--fh);font-weight:600;font-size:16px;margin:0 0 var(--s1)}
+/* celular: campos com 16px para o iPhone não dar zoom sozinho ao tocar */
+@media (max-width:760px){.tin,input,textarea,select{font-size:16px!important}}
+#w-login{box-shadow:0 0 40px rgba(122,0,255,.35),0 0 0 100vmax var(--off);max-width:440px}
+#w-login header{display:block;padding:var(--s3) var(--s3) var(--s2)}#w-login .cover{height:140px;margin:calc(-1 * var(--s3)) calc(-1 * var(--s3)) var(--s2);background:url(img/cover.jpg) center 30%/cover}
+#w-login .logo{font-size:44px}.lform{display:grid;gap:4px}.lform h2{margin:0 0 var(--s1)}.lform .tin{max-width:none}.lform .btn.dark{margin-top:var(--s1);width:100%;min-height:44px}
+.lform .link{justify-self:center;margin-top:var(--s2)}.lerr{margin:0;color:#FF6B8B;font-size:13px;font-weight:600}
+/* ===== celular ===== */
+*{-webkit-tap-highlight-color:transparent}
+button,a,.qa,.tile,.mrow,.cov,label{touch-action:manipulation}
+.screen{overscroll-behavior-y:contain;-webkit-overflow-scrolling:touch}
+#nav,.qa,.btn,.iconbtn,#nav button{-webkit-user-select:none;user-select:none}
+.iconbtn{width:44px;height:44px}
+#nav button{min-height:52px;padding:6px 0}
+.btn:active,.qa:active,.mrow:active,.iconbtn:active,#nav button:active{transform:scale(.96)}
+@media (hover:none){
+  .qa:hover,.mrow:hover,.prow:hover{border-color:var(--line);box-shadow:none}
+  .btn:hover{box-shadow:none}
+  .btn.dark:hover,.btn.pink:hover,.btn.gold:hover,.btn[aria-pressed="true"]:hover{box-shadow:var(--glow-pink,none)}
+  .iconbtn:hover{background:none;filter:none}
+}
+@media (max-width:760px){
+  .win{box-sizing:border-box;border-left:0;border-right:0;left:0;right:0;top:auto;bottom:0;transform:none;width:100%;max-width:none;max-height:88vh;max-height:88dvh;border-radius:24px 24px 0 0;border-bottom:0;padding-bottom:env(safe-area-inset-bottom,0px);animation:vbzSheet .22s ease-out}
+  .win header{position:relative;padding-top:20px}
+  .win header::before{content:"";position:absolute;top:8px;left:50%;width:40px;height:4px;margin-left:-20px;border-radius:2px;background:var(--gray)}
+  #w-onb header,#w-login header{padding-top:var(--s3)}#w-onb header::before,#w-login header::before{display:none}
+  #w-onb .cover,#w-login .cover{border-radius:24px 24px 0 0}
+  .win .body{padding:var(--s2) var(--s2) var(--s3)}
+  body.kb #nav{display:none}
+  body.kb .screen{bottom:0}
+  body.kb .mform{bottom:0;padding-bottom:max(8px,env(safe-area-inset-bottom,0px))}
+  body.kb #toast{bottom:16px}
+}
+@keyframes vbzSheet{from{transform:translateY(48px);opacity:.3}to{transform:none;opacity:1}}
+@media (prefers-reduced-motion:reduce){.win{animation:none}}
 body[data-tab="world"] #toast{bottom:calc(140px + env(safe-area-inset-bottom,0px))}
 /* World: botões e chat no rosa do manual, painéis no roxo da noite */
 .wb{border-radius:16px;background:rgba(18,8,31,.85);border-color:var(--pink);box-shadow:0 0 16px rgba(255,46,196,.4)}
@@ -658,7 +693,7 @@ body[data-tab="world"] #toast{bottom:calc(140px + env(safe-area-inset-bottom,0px
   <div class="field"><label class="lb" for="e-tags">Interesses</label><input class="tin" id="e-tags" maxlength="60" placeholder="ex: Música · Moda · Skate"></div>
   <div class="field"><span class="lb">Capa do perfil</span><div class="covers" id="e-covers"></div></div>
   <div class="field"><label class="lb" for="e-bio">Bio</label><textarea class="tin" id="e-bio" maxlength="120" placeholder="Moda, música e gente."></textarea></div>
-  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn dark" id="e-save">Salvar</button><button class="btn" id="e-look">Mudar visual</button></div></div></div>
+  <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn dark" id="e-save">Salvar</button><button class="btn" id="e-look">Mudar visual</button></div><div class="field" id="e-logoutbox" style="margin-top:16px"><button type="button" class="btn" id="e-logout">Sair da conta</button></div></div></div>
 <div class="win" id="w-post" hidden><header><div><h2>Novo post</h2><p class="sub">Conte o que está rolando.</p></div><button class="x" data-close aria-label="Fechar">×</button></header><div class="body">
   <form id="composer" autocomplete="off" style="display:grid;gap:12px"><textarea class="tin" id="ptext" maxlength="280" placeholder="O que está rolando?"></textarea><label class="field" style="margin:0"><span class="lb">Link de música (opcional)</span><input class="tin" id="pmusic" maxlength="300" inputmode="url" placeholder="Cole um link do Spotify, YouTube ou SoundCloud"></label><div id="pmprev" hidden></div><label class="field" style="margin:0"><span class="lb">Publicar para</span><select class="tin" id="pcircle"></select></label><label class="chk"><input type="checkbox" id="plook"> Mostrar meu visual no post</label><button class="btn dark" id="psend">Publicar</button></form></div></div>
 <div class="win" id="w-help" hidden><header><div><h2>Como funciona</h2><p class="sub">Música. Gente. Estilo.</p></div><button class="x" data-close aria-label="Fechar">×</button></header><div class="body"><ul class="help">
@@ -668,6 +703,7 @@ body[data-tab="world"] #toast{bottom:calc(140px + env(safe-area-inset-bottom,0px
   <li><b>Seu quarto</b>: em Salas → Meus quartos, crie um quarto, decore com Mobília e aumente quando quiser.</li>
   <li><b>Loja</b>: a linha Core (Boxy Tee, Baby Tee, Hoodie, Zip Jacket) e a edição Final Mix / 26 para o seu avatar.</li>
   <li><b>Pilas</b> são a moeda. No protótipo, a compra é de teste e não cobra nada.</li></ul></div></div>
+<div class="win" id="w-login" hidden><header><div class="cover" aria-hidden="true"></div><span class="logo" aria-label="VBZ">VBZ<svg><use href="#star"/></svg></span><span class="tagline">Get in the vibe</span></header><div class="body"><form id="l-form" class="lform" autocomplete="on"><h2 id="l-title">Entrar</h2><div class="field"><label class="lb" for="l-user">Nome de usuário</label><input class="tin" id="l-user" name="username" maxlength="16" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="ex: luna.vbz"></div><div class="field"><label class="lb" for="l-pass">Senha</label><input class="tin" id="l-pass" name="password" type="password" maxlength="64" autocomplete="current-password"></div><div class="field" id="l-pass2box" hidden><label class="lb" for="l-pass2">Repita a senha</label><input class="tin" id="l-pass2" type="password" maxlength="64" autocomplete="new-password"></div><p class="lerr" id="l-err" role="alert" hidden></p><button class="btn dark" id="l-go">Entrar</button><button type="button" class="link" id="l-switch">Não tem conta? Criar conta</button><p class="sub">Protótipo: a conta fica salva neste navegador.</p></form></div></div>
 <div class="win" id="w-onb" hidden><header><div class="cover" aria-hidden="true"></div><span class="logo" aria-label="VBZ">VBZ<svg><use href="#star"/></svg></span><span class="tagline">Get in the vibe</span><p class="sub" style="margin-top:16px">Um universo social onde gente, cultura, moda e música se encontram. Monte seu personagem para entrar.</p></header><div class="body"><div class="wardrobe"><div class="prev"><canvas id="onbprev" width="120" height="180"></canvas></div><div>
   <div class="field"><label class="lb" for="nick">Apelido</label><input class="tin" id="nick" maxlength="16" placeholder="ex: luna.vbz"></div>
   <div class="lb">Pele</div><div class="sws" id="o-skin"></div><div class="lb">Cabelo</div><div class="tabs" id="o-hs" style="margin:4px 0 10px"></div><div class="lb">Cor do cabelo</div><div class="sws" id="o-hc"></div>
@@ -1158,7 +1194,15 @@ function roomFromDoc(id,d){const s=[8,12,16].includes(+d.size)?+d.size:8;return{
 let db=null,usr=null,rm=null,myId=null,isOwner=false,online=false,ready=false,myPeer=null;
 let profile=null,room=null,rstatic=null,BLK=null,ledger=[],roomsList={};
 const others=new Map();let bubbles=[],now=0,mouse=null,hoverTile=null,hoverObj=null,build=false,placing=null,sel=null;
-const LS={get(k,d){try{const v=localStorage.getItem(k);return v?JSON.parse(v):d;}catch(e){return d;}},set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}};
+// Conta local (login com usuário e senha). Fora do claude.ai, cada conta guarda o próprio perfil e as próprias preferências.
+// MUNDO: troque para true quando o mapa for aprovado (volta o menu, o atalho e os botões de entrar nas salas)
+// Modo "só o mapa": o endereço terminado em ?mapa liga o Mundo e abre direto na cidade, sem Início, Feed, Amigos e Perfil
+const MAPA=new URLSearchParams(location.search).has('mapa');if(MAPA)document.documentElement.classList.add('mapa');
+const WORLD_ON=MAPA;
+const ACC=(()=>{try{return localStorage.getItem('vbz-session')||'';}catch(e){return'';}})();
+const PERSONAL=new Set(['vbz-profile','vbz-saved','vbz-declined','vbz-dm-read','vbz-ev-seen','vbz-circle-left','vbz-ledger','vbz-lots']);
+const lsKey=k=>ACC&&PERSONAL.has(k)?k+':'+ACC:k;
+const LS={get(k,d){try{const v=localStorage.getItem(lsKey(k));return v?JSON.parse(v):d;}catch(e){return d;}},set(k,v){try{localStorage.setItem(lsKey(k),JSON.stringify(v));}catch(e){}}};
 const me={id:'me',name:'Você',x:0,y:0,tx:0,ty:0,path:[],dir:0,pose:'std',act:'',anim:0,look:cleanLook({}),moving:false};
 const myUid=()=>myId||'local';const isMine=()=>room&&room.owner&&room.owner===myUid();
 
@@ -1409,7 +1453,7 @@ function applyProfile(p){const first=!profile;
   profile={v:2,nick:String(p.nick||'Visitante').slice(0,16),coins:Math.max(0,+p.coins||0),look:p.v===2?cleanLook(p.look):cleanLook({}),owned:Array.isArray(p.owned)&&p.v===2?p.owned.filter(id=>CL[id]):[],inv:{},rooms:Array.isArray(p.rooms)?p.rooms.filter(x=>typeof x==='string').slice(0,10):[],bio:String(p.bio||'').slice(0,120),tags:String(p.tags||'').slice(0,60),cover:COVERS[p.cover]?p.cover:'palmeiras',following:Array.isArray(p.following)?p.following.filter(x=>typeof x==='string').slice(0,500):[]};
   if(p.inv&&typeof p.inv==='object')for(const k in p.inv)if(FD[k]&&!FD[k].hide&&(+p.inv[k]>0))profile.inv[k]=Math.min(99,+p.inv[k]|0);
   me.name=profile.nick;me.look=profile.look;
-  if(first){ready=true;if(p.v!==2){profile.coins+=300;saveProfile();}enterRoom(roomFromPub('lobby'),true);fullPres();savePeople();}
+  if(first){ready=true;if(p.v!==2){profile.coins+=300;saveProfile();}enterRoom(roomFromPub('lobby'),true);fullPres();savePeople();if(MAPA)showTab('world');}
   hud();refreshOpen();socialRefresh();}
 async function connect(){const C=window.claude;
   if(C&&typeof C.use==='function')[db,usr,rm]=await Promise.all(['db','user','room'].map(n=>C.use(n).catch(()=>null)));
@@ -1421,7 +1465,7 @@ async function connect(){const C=window.claude;
     db.collection('lots').limit(100).onSnapshot(s=>{if(lotWriting||s.metadata.hasPendingWrites)return;const n={};for(const d of s.docs){const v=d.data();if(v&&v.owner&&LOTS.some(l=>l.id===d.id))n[d.id]=v;}lotState=n;applyLots();},()=>{});
     db.collection('rooms').limit(80).onSnapshot(s=>{roomsList={};for(const d of s.docs){const v=d.data();if(v&&v.owner)roomsList[d.id]=v;}if(openId==='nav')renderNav();},()=>{});
     db.collection('ledger').orderBy('at','desc').limit(300).onSnapshot(s=>{ledger=s.docs.map(d=>d.data());renderFeed();if(openId==='cash')renderCash();},()=>{});}
-  else{isOwner=true;lotState=LS.get('vbz-lots',{});roomsList=LS.get('vbz-rooms',{});ledger=LS.get('vbz-ledger',[]);renderFeed();const p=LS.get('vbz-profile',null);if(p)applyProfile(p);else onboard();}
+  else{if(!ACC||!localAccounts()[ACC]){showLogin();return;}myId='u:'+ACC;isOwner=true;lotState=LS.get('vbz-lots',{});roomsList=LS.get('vbz-rooms',{});ledger=LS.get('vbz-ledger',[]);renderFeed();const p=LS.get('vbz-profile',null);if(p)applyProfile(p);else onboard();}
   $('#b-cash').hidden=!isOwner;}
 
 // ====================================================================== NEGÓCIOS
@@ -1443,8 +1487,8 @@ const logEl=$('#log');function log(m,k=''){const d=document.createElement('div')
 function renderFeed(){const el=$('#feed');el.innerHTML='';for(const e of ledger.filter(x=>x.kind!=='pilas').slice(0,4)){const d=document.createElement('div');d.className='f';const b=document.createElement('b');b.textContent=String(e.nick||'Alguém').slice(0,16);d.append(b,document.createTextNode(' comprou '+String(e.item||'').slice(0,40)));el.append(d);}}
 function hud(){$('#coins').textContent=profile?fmt(profile.coins):'0';const hc=$('#hcoins');if(hc)hc.textContent=profile?fmt(profile.coins):'0';$('#b-build').hidden=!canDecor();}
 let openId=null;
-function closeWins(){document.querySelectorAll('.win').forEach(w=>{if(w.id!=='w-onb')w.hidden=true;});openId=null;document.querySelectorAll('.ico').forEach(b=>{if(b.id!=='b-music')b.setAttribute('aria-pressed','false');});}
-function openWin(id){if(!profile&&id!=='help')return;const was=openId===id;closeWins();if(was)return;$('#w-'+id).hidden=false;openId=id;const b=$('#b-'+id);if(b&&b.classList.contains('ico'))b.setAttribute('aria-pressed','true');refreshOpen();}
+function closeWins(fromPop){const had=openId;if(had&&fromPop!==true&&history.state&&history.state.vbz==='win')setTimeout(()=>{if(!openId&&history.state&&history.state.vbz==='win')history.back();},0);document.querySelectorAll('.win').forEach(w=>{if(w.id!=='w-onb'&&w.id!=='w-login')w.hidden=true;});openId=null;document.querySelectorAll('.ico').forEach(b=>{if(b.id!=='b-music')b.setAttribute('aria-pressed','false');});}
+function openWin(id){if(!profile&&id!=='help')return;const was=openId===id;closeWins(true);if(was){if(history.state&&history.state.vbz==='win')history.back();return;}if(!(history.state&&history.state.vbz==='win'))history.pushState({vbz:'win'},'');$('#w-'+id).hidden=false;openId=id;const b=$('#b-'+id);if(b&&b.classList.contains('ico'))b.setAttribute('aria-pressed','true');refreshOpen();}
 function refreshOpen(){({nav:renderNav,cat:renderCat,inv:renderInv,look:renderLook,buy:renderPkgs,cash:renderCash,edit:renderEdit,events:renderEvents,comments:renderComments,pview:renderPostView,flist:renderFriendList,circle:()=>{$('#circname').value='';renderCircleWin();},post:renderComposer})[openId]?.();}
 document.querySelectorAll('[data-close]').forEach(b=>b.onclick=closeWins);
 for(const k of['nav','cat','inv','look','help','cash'])$('#b-'+k).onclick=()=>openWin(k);$('#b-buy').onclick=()=>openWin('buy');$('#b-music').onclick=toggleMusic;
@@ -1504,9 +1548,35 @@ function renderCash(){const b=$('#cashbody');b.innerHTML='';const rev=ledger.fil
   for(const e of ledger.slice(0,80)){const tr=el('tr'),d=new Date(+e.at||0);for(const[v,c]of[[`${pad(d.getDate())}/${pad(d.getMonth()+1)} ${pad(d.getHours())}:${pad(d.getMinutes())}`,''],[String(e.nick||'?').slice(0,16),''],[e.kind==='pilas'?'Pacote de pilas':String(e.item||e.kind).slice(0,40),''],[fmt(+e.pilas||0),'r'],[e.brl?brl(+e.brl):'','r']]){const td=el('td',c,v);tr.append(td);}body.append(tr);}tb.append(body);tw.append(tb);b.append(tw);}
 // cadastro
 const onbLook={skin:SKINS[1],hs:'curto',hc:HCOLS[0],acc:[]};
-function onboard(){$('#w-onb').hidden=false;renderOnb();if(usr)usr.name().then(n=>{const i=$('#nick');if(n&&!i.value)i.value=n.split(' ')[0].slice(0,16);}).catch(()=>{});}
+// ---- Login simples: nome de usuário e senha (senha guardada com PBKDF2, nunca em texto)
+function localAccounts(){try{return JSON.parse(localStorage.getItem('vbz-accounts')||'{}')||{};}catch(e){return{};}}
+function saveAccounts(a){localStorage.setItem('vbz-accounts',JSON.stringify(a));}
+const b64=buf=>btoa(String.fromCharCode(...new Uint8Array(buf)));
+async function hashPass(pass,saltB64){const salt=Uint8Array.from(atob(saltB64),c=>c.charCodeAt(0));const key=await crypto.subtle.importKey('raw',new TextEncoder().encode(pass),'PBKDF2',false,['deriveBits']);
+  return b64(await crypto.subtle.deriveBits({name:'PBKDF2',salt,iterations:150000,hash:'SHA-256'},key,256));}
+let loginMode='entrar';
+function showLogin(){$('#w-login').hidden=false;$('#loading').hidden=true;renderLogin();setTimeout(()=>$('#l-user').focus(),50);}
+function renderLogin(){const create=loginMode==='criar';$('#l-title').textContent=create?'Criar conta':'Entrar';$('#l-pass2box').hidden=!create;$('#l-go').textContent=create?'Criar conta':'Entrar';
+  $('#l-pass').autocomplete=create?'new-password':'current-password';$('#l-switch').textContent=create?'Já tenho conta → Entrar':'Não tem conta? Criar conta';$('#l-err').hidden=true;}
+function loginErr(m){const e=$('#l-err');e.textContent=m;e.hidden=false;}
+async function doLogin(){const user=$('#l-user').value.trim(),pass=$('#l-pass').value,key=user.toLowerCase();
+  if(!crypto||!crypto.subtle){loginErr('Este navegador não permite login aqui. Abra o site pelo endereço https.');return;}
+  if(!/^[a-z0-9._]{3,16}$/i.test(user)){loginErr('O usuário precisa ter de 3 a 16 letras, números, ponto ou _.');return;}
+  if(pass.length<4){loginErr('A senha precisa ter pelo menos 4 caracteres.');return;}
+  const accs=localAccounts();$('#l-go').disabled=true;
+  try{if(loginMode==='criar'){if(accs[key]){loginErr('Esse usuário já existe. Escolha outro ou entre.');return;}if(pass!==$('#l-pass2').value){loginErr('As senhas não são iguais.');return;}
+      const salt=b64(crypto.getRandomValues(new Uint8Array(16)));accs[key]={user,salt,hash:await hashPass(pass,salt),at:Date.now()};saveAccounts(accs);}
+    else{const a=accs[key];if(!a||await hashPass(pass,a.salt)!==a.hash){loginErr('Usuário ou senha incorretos.');return;}}
+    localStorage.setItem('vbz-session',key);location.reload();}
+  catch(e){loginErr('Não deu para entrar agora. Tente de novo.');}
+  finally{$('#l-go').disabled=false;}}
+function logout(){try{localStorage.removeItem('vbz-session');}catch(e){}location.reload();}
+function onboard(){$('#w-onb').hidden=false;renderOnb();if(ACC){const acc=localAccounts()[ACC];const i=$('#nick');i.value=acc?acc.user:ACC;i.readOnly=true;i.title='Seu apelido é o seu nome de usuário';}if(usr)usr.name().then(n=>{const i=$('#nick');if(n&&!i.value)i.value=n.split(' ')[0].slice(0,16);}).catch(()=>{});}
 function renderOnb(){const set=(id,cols,key)=>{const h=$(id);h.innerHTML='';h.append(...swatches(cols,onbLook[key],c=>{onbLook[key]=c;renderOnb();}).childNodes);};set('#o-skin',SKINS,'skin');set('#o-hc',HCOLS,'hc');
   const hs=$('#o-hs');hs.innerHTML='';for(const[k,n]of HSTY){const b=btn(n,()=>{onbLook.hs=k;renderOnb();});b.setAttribute('aria-pressed',onbLook.hs===k);hs.append(b);}drawPreview($('#onbprev'),cleanLook(onbLook),0);}
+$('#l-form').addEventListener('submit',e=>{e.preventDefault();doLogin();});
+$('#l-switch').onclick=()=>{loginMode=loginMode==='criar'?'entrar':'criar';renderLogin();};
+$('#e-logout').onclick=()=>{if(confirm('Sair da sua conta?'))logout();};
 $('#onb-go').onclick=()=>{const nick=$('#nick').value.trim().replace(/\s+/g,' ').slice(0,16);if(nick.length<2){$('#nick').focus();log('Escolha um apelido com pelo menos 2 letras.','bad');return;}
   $('#w-onb').hidden=true;applyProfile({v:2,nick,coins:300,look:onbLook,owned:['camiseta','calca','chinelo'],inv:{cadeira:1,planta:1},rooms:[]});profile.look=cleanLook(Object.assign({},onbLook,{top:'camiseta',tc:'#F5F5F7',bot:'calca',bc:'#424049',shoes:'chinelo',sc:'#0B0B0D'}));me.look=profile.look;saveProfile();savePeople();showTab('home');toast('Você tem 300 pilas de boas-vindas. Monte seu visual na Loja.');};
 // chat
@@ -1574,7 +1644,7 @@ const COVERS={palmeiras:{n:'Palmeiras',img:'img/banner.jpg'},cidade:{n:'Cidade',
 Object.entries({'demo:adri':'palmeiras','demo:luna':'ceu','demo:nando':'pista','demo:bia':'crew','demo:rafa':'cidade','demo:gabi':'praca','demo:caio':'cidade','demo:maya':'crew'}).forEach(([k,c])=>{if(DEMO[k])DEMO[k].cover=c;});
 const T0=Date.now();
 function toast(msg){const t=$('#toast');t.textContent=msg;t.hidden=false;clearTimeout(toast._t);toast._t=setTimeout(()=>t.hidden=true,3200);}
-let lastTab='home';function showTab(t){let toFeed=false;if(t==='feed'){t='home';toFeed=true;}if(t!==tab)lastTab=tab;tab=t;if(toFeed)setTimeout(()=>{const a=$('#feed-anchor'),s=$('#s-home');if(a&&s)s.scrollTop=a.offsetTop-16;},150);for(const s of['home','feed','friends','profile','msgs'])$('#s-'+s).hidden=s!==t;document.body.dataset.tab=t;
+let lastTab='home';function showTab(t){if(MAPA&&profile)t='world';if(t==='world'&&!WORLD_ON){toast('O Mundo chega em breve ✦');return;}let toFeed=false;if(t==='feed'){t='home';toFeed=true;}if(t!==tab)lastTab=tab;tab=t;if(toFeed)setTimeout(()=>{const a=$('#feed-anchor'),s=$('#s-home');if(a&&s)s.scrollTop=a.offsetTop-16;},150);for(const s of['home','feed','friends','profile','msgs'])$('#s-'+s).hidden=s!==t;document.body.dataset.tab=t;
   document.querySelectorAll('#nav button').forEach(b=>b.setAttribute('aria-current',b.dataset.tab===t?'page':'false'));
   closeWins();hideCard();$('#wmenu').hidden=true;if(t!=='world'){closeSel();cancelPlacing();bubbles=[];}else resize();socialRefresh();}
 document.querySelectorAll('#nav button').forEach(b=>b.onclick=()=>{if(b.dataset.tab==='profile')viewUid=null;showTab(b.dataset.tab);});
@@ -1588,11 +1658,11 @@ function relTime(at){const s=Math.max(0,(Date.now()-at)/1000);if(s<60)return'ago
 function onlineUids(){const m=new Map();for(const o of others.values())if(o.by&&o.by!==myUid())m.set(o.by,o);return m;}
 function personOf(uid){if(uid===myUid()&&profile)return{nick:profile.nick,look:profile.look,bio:profile.bio,tags:profile.tags,cover:profile.cover,following:profile.following};return DEMO[uid]||people[uid]||null;}
 function roomName(key){if(!key)return'';if(key.startsWith('p:'))return(PUB[key.slice(2)]||{}).name||'';return(roomsList[key.slice(2)]||{}).name||'um quarto';}
-function goRoomKey(key){if(key.startsWith('p:')&&PUB[key.slice(2)])enterRoom(roomFromPub(key.slice(2)));else{const id=key.slice(2);if(roomsList[id])enterRoom(roomFromDoc(id,roomsList[id]));}showTab('world');}
+function goRoomKey(key){if(!WORLD_ON){toast('O Mundo chega em breve ✦');return;}if(key.startsWith('p:')&&PUB[key.slice(2)])enterRoom(roomFromPub(key.slice(2)));else{const id=key.slice(2);if(roomsList[id])enterRoom(roomFromDoc(id,roomsList[id]));}showTab('world');}
 // ---- dados públicos
 let pplWriting=false;
 function savePeople(){if(!profile)return;const d={nick:profile.nick,look:profile.look,bio:profile.bio||'',tags:profile.tags||'',cover:profile.cover||'palmeiras',following:profile.following||[],at:Date.now()};
-  if(!online){const all=LS.get('vbz-people',{});all.local=d;LS.set('vbz-people',all);people.local=d;return;}
+  if(!online){const all=LS.get('vbz-people',{});all[myUid()]=d;LS.set('vbz-people',all);people[myUid()]=d;return;}
   if(pplWriting)return setTimeout(savePeople,400);pplWriting=true;db.doc('people/'+myId).set(d).catch(()=>{}).finally(()=>{pplWriting=false;});}
 function sanitizePerson(v){if(!v||typeof v!=='object')return null;return{nick:String(v.nick||'?').slice(0,16),look:cleanLook(v.look),bio:String(v.bio||'').slice(0,160),tags:String(v.tags||'').slice(0,60),cover:COVERS[v.cover]?v.cover:'palmeiras',following:Array.isArray(v.following)?v.following.filter(x=>typeof x==='string').slice(0,500):[],at:+v.at||0};}
 function parseMusic(u){if(typeof u!=='string')return null;u=u.trim();if(!/^https?:\/\//i.test(u)||u.length>300)return null;let x;try{x=new URL(u);}catch(e){return null;}const host=x.hostname.replace(/^www\.|^m\./,'');
@@ -1700,7 +1770,7 @@ function postCard(p){const c=el('article','post');const hd=el('div','hd'),who=el
   const sv=el('button');sv.innerHTML=saved.has(p.id)?IC.saveOn:IC.save;sv.setAttribute('aria-label','Salvar');sv.onclick=()=>toggleSave(p.id);a.append(lb,cb,sh,el('span','sp'),sv);c.append(a);if(!p.img&&!p.music&&!(p.showLook&&p.look)&&p.kind!=='track')c.classList.add('tw');return c;}
 function personRow(uid,online){const P=personOf(uid);if(!P)return el('span');const r=el('div','prow'),t=el('div','t'),b=el('b',null,P.nick);b.onclick=()=>openProfile(uid);
   t.append(b,el('span',null,online?('No World · '+roomName(online.room)):(P.tags||P.bio||'Get in the vibe ✦').split('\n')[0]));r.append(avatarEl(uid,46,{online:!!online}),t);
-  if(online)r.append(btn('Entrar na sala',()=>goRoomKey(online.room),'btn small dark'));
+  if(online&&WORLD_ON)r.append(btn('Entrar na sala',()=>goRoomKey(online.room),'btn small dark'));
   if(uid!==myUid())r.append(...friendButtons(uid,true));return r;}
 // ---- Home
 function renderHome(){if(!profile)return;const h=new Date().getHours();const g=$('#greet');g.textContent='';g.append(document.createTextNode(h<5?'Boa noite,':h<12?'Bom dia,':h<18?'Boa tarde,':'Boa noite,'),el('br'),el('span','grad',profile.nick));
@@ -1742,16 +1812,17 @@ function renderMsgs(){if(!profile)return;$('#m-listview').hidden=!!dmWith;$('#m-
 function inRoom(key){let n=0;for(const o of others.values())if(o.room===key)n++;if(room&&room.key===key&&ready)n++;return n;}
 function shopDrop(){lookTab='top';lookLine.top='Drop 02';openWin('look');}
 const EVENTS=[
-  {img:'lounge.jpg',eye:'((•)) ACONTECENDO AGORA',name:'Lounge Session',sub:()=>`DJ nando.vbz · ${inRoom('p:balada')} na sala`,cta:'Entrar no Mundo →',go:()=>goRoomKey('p:balada')},
+  {img:'lounge.jpg',eye:'((•)) ACONTECENDO AGORA',name:'Lounge Session',sub:()=>`DJ nando.vbz · ${inRoom('p:balada')} na sala`,cta:'Entrar no Mundo →',world:1,go:()=>goRoomKey('p:balada')},
   {img:'world/event_fashion.webp',eye:'NOVO NA VBZ SHOP',name:'Fashion Drop 02',sub:()=>'16 tops, 16 bottoms e 8 calçados em Noir, Ice e Gold',cta:'Ver o drop →',go:shopDrop},
-  {img:'world/event_skate.webp',eye:'HOJE · 19H',name:'Skate na Praça',sub:()=>`Praça VBZ · ${inRoom('p:lobby')} na praça agora`,cta:'Ir para a Praça →',go:()=>goRoomKey('p:lobby')},
-  {img:'world/event_music.webp',eye:'SEXTA · 22H',name:'Beat Room',sub:()=>'DJ e pista de dança no Lounge',cta:'Entrar na sala →',go:()=>goRoomKey('p:balada')}];
+  {img:'world/event_skate.webp',eye:'HOJE · 19H',name:'Skate na Praça',sub:()=>`Praça VBZ · ${inRoom('p:lobby')} na praça agora`,cta:'Ir para a Praça →',world:1,go:()=>goRoomKey('p:lobby')},
+  {img:'world/event_music.webp',eye:'SEXTA · 22H',name:'Beat Room',sub:()=>'DJ e pista de dança no Lounge',cta:'Entrar na sala →',world:1,go:()=>goRoomKey('p:balada')}];
 let hapI=0,hapT=null;
+function evCta(e){return!WORLD_ON&&e.world?'Em breve no Mundo ✦':e.cta;}
 function renderHappen(){const n=EVENTS.length,e=EVENTS[hapI%n],im=$('#h-happen img');if(im.getAttribute('src')!=='img/'+e.img){im.src='img/'+e.img;im.alt=e.name;}
-  $('#h-happen .eyebrow').textContent=e.eye;$('#h-hname').textContent=e.name;$('#h-hsub').textContent=e.sub();$('#h-join').textContent=e.cta;$('#h-join').onclick=e.go;
+  $('#h-happen .eyebrow').textContent=e.eye;$('#h-hname').textContent=e.name;$('#h-hsub').textContent=e.sub();$('#h-join').textContent=evCta(e);$('#h-join').onclick=e.go;
   const d=$('#h-dots');d.innerHTML='';EVENTS.forEach((x,i)=>{const b=el('button');b.setAttribute('aria-label',x.name);b.setAttribute('aria-pressed',i===hapI%n);b.onclick=()=>{hapI=i;renderHappen();};d.append(b);});
   clearTimeout(hapT);hapT=setTimeout(()=>{if(tab==='home'&&!document.hidden)hapI++;renderHappen();},7000);}
-function renderEvents(){const b=$('#evlist');b.innerHTML='';for(const e of EVENTS){const r=el('div','evrow');const im=el('img');im.src='img/'+e.img;im.alt='';const t=el('div','t');t.append(el('div','eyebrow',e.eye),el('b',null,e.name),el('p',null,e.sub()),btn(e.cta,()=>{closeWins();e.go();},'btn small dark'));r.append(im,t);b.append(r);}}
+function renderEvents(){const b=$('#evlist');b.innerHTML='';for(const e of EVENTS){const r=el('div','evrow');const im=el('img');im.src='img/'+e.img;im.alt='';const t=el('div','t');t.append(el('div','eyebrow',e.eye),el('b',null,e.name),el('p',null,e.sub()),btn(evCta(e),()=>{closeWins();e.go();},'btn small dark'));r.append(im,t);b.append(r);}}
 // ---- Feed
 function renderPosts(){if(!profile)return;const tb=$('#f-tabs');tb.innerHTML='';if(feedTab==='following')feedTab='friends';for(const[k,n]of[['all','Para você'],['friends','Amigos'],['circles','Círculos']]){const b=btn(n,()=>{feedTab=k;renderPosts();},'btn');b.setAttribute('aria-pressed',feedTab===k);tb.append(b);}
   const L=$('#f-list');L.innerHTML='';
@@ -1799,7 +1870,7 @@ function renderProfile(){if(!profile)return;const uid=viewUid||myUid(),mine=uid=
   const S=$('#pr-stats');S.innerHTML='';[['Posts',st[0]],['Amigos',st[1]],['Círculos',st[2]]].forEach(([l,v])=>{const d=el(l==='Posts'?'div':'button','pstat');if(l==='Amigos'){d.onclick=()=>openFriendList(uid);d.setAttribute('aria-label','Ver amigos');}if(l==='Círculos')d.onclick=()=>{if(mine){feedTab='circles';circleSel='all';showTab('feed');}else toast('Os círculos são fechados: só os membros sabem quem está neles.');};d.append(el('b',null,v>=1000?(v/1000).toFixed(1).replace('.0','')+'K':fmt(v)),el('span',null,l));S.append(d);});
   const ac=$('#pr-acts');ac.innerHTML='';
   if(mine){ac.append(btn('Editar perfil',()=>openWin('edit'),'btn'));const gear=btn('',()=>openWin(isOwner?'cash':'help'),'btn gear');gear.innerHTML='<svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/></svg>';gear.setAttribute('aria-label',isOwner?'Caixa':'Ajuda');ac.append(gear);}
-  else{ac.append(...friendButtons(uid,false));if(isFriend(uid))ac.append(btn('Mensagem',()=>openMsgs(uid),'btn dark'));if(on)ac.append(btn('Entrar na sala',()=>goRoomKey(on.room),'btn pink'));}
+  else{ac.append(...friendButtons(uid,false));if(isFriend(uid))ac.append(btn('Mensagem',()=>openMsgs(uid),'btn dark'));if(on&&WORLD_ON)ac.append(btn('Entrar na sala',()=>goRoomKey(on.room),'btn pink'));}
   const tb=$('#pr-tabs');tb.innerHTML='';const TI={grid:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M3 15h18M9 3v18M15 3v18"/></svg>',look:'<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg>',saved:IC.save};
   for(const k of['grid','look','saved']){const b=el('button');b.innerHTML=TI[k];b.setAttribute('aria-label',{grid:'Posts',look:'Visual',saved:'Salvos'}[k]);b.setAttribute('aria-pressed',prTab===k);b.onclick=()=>{prTab=k;renderProfile();};tb.append(b);}
   const body=$('#pr-body');body.innerHTML='';
@@ -1819,7 +1890,7 @@ function applyTheme(t){const s=document.getElementById('theme-neon');if(s)s.disa
 document.querySelectorAll('#e-theme button').forEach(b=>b.onclick=()=>{applyTheme(b.dataset.t);toast(b.dataset.t==='neon'?'Visual neon ligado ✦':'Visual claro ligado.');});
 let editCover='palmeiras';
 function renderCovers(){const box=$('#e-covers');box.innerHTML='';for(const[k,c]of Object.entries(COVERS)){const b=el('button','cov'+(c.pix?' pix':''));b.type='button';b.style.backgroundImage=`url(${c.img})`;b.setAttribute('aria-label','Capa '+c.n);b.setAttribute('aria-pressed',editCover===k);b.append(el('span',null,c.n));b.onclick=()=>{editCover=k;renderCovers();};box.append(b);}}
-function renderEdit(){$('#e-nick').value=profile.nick;$('#e-bio').value=profile.bio||'';$('#e-tags').value=profile.tags||'';editCover=profile.cover||'palmeiras';renderCovers();applyTheme(getTheme());}
+function renderEdit(){$('#e-logoutbox').hidden=!ACC;$('#e-nick').value=profile.nick;$('#e-bio').value=profile.bio||'';$('#e-tags').value=profile.tags||'';editCover=profile.cover||'palmeiras';renderCovers();applyTheme(getTheme());}
 $('#e-save').onclick=()=>{const n=$('#e-nick').value.trim().replace(/\s+/g,' ').slice(0,16);if(n.length<2){toast('O apelido precisa de pelo menos 2 letras.');return;}profile.nick=n;profile.bio=$('#e-bio').value.trim().slice(0,160);profile.tags=$('#e-tags').value.trim().replace(/\s+/g,' ').slice(0,60);profile.cover=COVERS[editCover]?editCover:'palmeiras';me.name=n;saveProfile();savePeople();pres({nick:n});closeWins();toast('Perfil salvo.');socialRefresh();};
 $('#e-look').onclick=()=>openWin('look');
 let srT=null;function socialRefresh(){if(srT)return;srT=setTimeout(()=>{srT=null;try{if(tab==='home'){renderHome();renderPosts();}if(tab==='feed')renderPosts();if(tab==='friends')renderFriendsScreen();if(tab==='profile')renderProfile();if(tab==='msgs')renderMsgs();updateDmBadge();}catch(e){console.error(e);}},60);}
@@ -2825,6 +2896,12 @@ function frame(ts){const dt=Math.min(.05,(ts-last)/1000);last=ts;now+=dt;
   bubbleT+=dt;if(bubbleT>4.5){bubbleT=0;for(const b of bubbles)b.ty-=27;}
   uiT+=dt;if(uiT>1){uiT=0;hud();}
   if(tab==='world')render(now,dt);requestAnimationFrame(frame);}
+if(!WORLD_ON){document.querySelectorAll('#nav [data-tab=world],#q-world').forEach(b=>b.remove());$('#nav .in').style.gridTemplateColumns='repeat(3,1fr)';$('.quick').style.gridTemplateColumns='repeat(3,1fr)';}
+addEventListener('popstate',()=>{if(openId)closeWins(true);});
+// teclado aberto no celular: esconde o menu de baixo e cola o campo de digitar no teclado
+const isPhone=()=>matchMedia('(max-width:760px)').matches;let kbT=null;
+document.addEventListener('focusin',e=>{if(isPhone()&&e.target.matches('input:not([type=checkbox]):not([type=radio]),textarea')){clearTimeout(kbT);document.body.classList.add('kb');}});
+document.addEventListener('focusout',()=>{clearTimeout(kbT);kbT=setTimeout(()=>{if(!document.activeElement||!document.activeElement.matches('input,textarea'))document.body.classList.remove('kb');},120);});
 document.body.dataset.tab='home';resize();connect().catch(e=>{console.error(e);});requestAnimationFrame(frame);
 })();
 </script>
