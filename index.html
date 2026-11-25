@@ -1465,7 +1465,8 @@ async function connect(){const C=window.claude;
     db.collection('lots').limit(100).onSnapshot(s=>{if(lotWriting||s.metadata.hasPendingWrites)return;const n={};for(const d of s.docs){const v=d.data();if(v&&v.owner&&LOTS.some(l=>l.id===d.id))n[d.id]=v;}lotState=n;applyLots();},()=>{});
     db.collection('rooms').limit(80).onSnapshot(s=>{roomsList={};for(const d of s.docs){const v=d.data();if(v&&v.owner)roomsList[d.id]=v;}if(openId==='nav')renderNav();},()=>{});
     db.collection('ledger').orderBy('at','desc').limit(300).onSnapshot(s=>{ledger=s.docs.map(d=>d.data());renderFeed();if(openId==='cash')renderCash();},()=>{});}
-  else{if(!ACC||!localAccounts()[ACC]){showLogin();return;}myId='u:'+ACC;isOwner=true;lotState=LS.get('vbz-lots',{});roomsList=LS.get('vbz-rooms',{});ledger=LS.get('vbz-ledger',[]);renderFeed();const p=LS.get('vbz-profile',null);if(p)applyProfile(p);else onboard();}
+  else{const semConta=!ACC||!localAccounts()[ACC];if(semConta&&!MAPA){showLogin();return;}myId=semConta?'u:visitante':'u:'+ACC; // no modo mapa não há login: quem não tem conta entra como visitante
+isOwner=true;lotState=LS.get('vbz-lots',{});roomsList=LS.get('vbz-rooms',{});ledger=LS.get('vbz-ledger',[]);renderFeed();const p=LS.get('vbz-profile',null);if(p)applyProfile(p);else onboard();}
   $('#b-cash').hidden=!isOwner;}
 
 // ====================================================================== NEGÓCIOS
