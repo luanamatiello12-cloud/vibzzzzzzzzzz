@@ -37,6 +37,18 @@ python3 -m http.server 8000
 
 e acesse http://localhost:8000.
 
+## No celular
+
+- Pensado para celular primeiro (testado de 320 a 430 px de largura). Janelas abrem como gaveta de baixo, o botão voltar do Android fecha a janela aberta e o teclado não cobre o campo das mensagens.
+- Dá para instalar como app: no Chrome (Android) abra o menu ⋮ → **Adicionar à tela inicial**; no Safari (iPhone) toque em Compartilhar → **Adicionar à Tela de Início**. Abre em tela cheia, com o ícone da VBZ (`img/app/`, `manifest.webmanifest`).
+- O Mundo está desligado até o mapa ser aprovado: no `index.html`, `const WORLD_ON=false;` (troque para `true` para religar).
+
+## Login (usuário e senha)
+
+Fora do claude.ai (localhost, Netlify) o app abre numa tela **Entrar / Criar conta** com nome de usuário e senha. O usuário vira o apelido; depois de criar a conta a pessoa monta o personagem. A senha é guardada com hash (PBKDF2, 150 mil rodadas), nunca em texto. "Sair da conta" fica em Perfil → Editar perfil.
+
+Hoje as contas ficam **no navegador**: cada aparelho tem as suas, e posts, amizades, círculos e mensagens só aparecem entre contas do mesmo navegador. Para as contas valerem em qualquer aparelho e todo mundo se ver, é preciso um servidor (ver a seção abaixo). Dentro do claude.ai o login continua sendo a conta do claude.ai.
+
 ## Login e banco de dados (Supabase) — para publicar no Netlify
 
 Fora do claude.ai a VBZ precisa de um servidor para ter login e para as pessoas se verem. O banco está descrito em [`supabase/schema.sql`](supabase/schema.sql).
